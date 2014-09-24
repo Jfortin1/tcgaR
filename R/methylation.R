@@ -8,22 +8,15 @@ library(illuminaio)
 
 
 
-#cancer = "acc"
-#platform = "450k"
-#verbose = TRUE
 
 
 
-
-
-
-
-
-	tcga.meth <- function(cancer = cancer, platform = c("27k", "450k"), verbose = FALSE){
-		filenames <- tcga.idat.names(cancer = cancer, platform = platform)
+	getTcga.meth <- function(cancer = cancer, platform = c("27k", "450k"), verbose = FALSE){
+		platform <- match.arg(platform)
+		filenames <- tcga.meth.idat.names(cancer = cancer, platform = platform)
 		n <- length(filenames[[1]])
 		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
-		mappings  <- tcga.mappings(cancer = cancer, platform = platform)
+		mappings  <- tcga.meth.mappings(cancer = cancer, platform = platform)
 		mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
 
 		cat("[tcga.meth] Constructing the rgset \n")
@@ -39,8 +32,8 @@ library(illuminaio)
 
 
 
-	tcga.mappings <- function(cancer , platform=c("27k","450k")) {
-
+	tcga.meth.mappings <- function(cancer , platform=c("27k","450k")) {
+		platform <- match.arg(platform)
 		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
 		if (platform == "27k"){
 			tail="/cgcc/jhu-usc.edu/humanmethylation27/methylation/"
@@ -110,8 +103,8 @@ library(illuminaio)
 
 
 
-	tcga.idat.names <- function(cancer, platform=c("27k", "450k")){
-		
+	tcga.meth.idat.names <- function(cancer, platform=c("27k", "450k")){
+		platform <- match.arg(platform)
 		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
 		if (platform == "27k"){
 			tail="/cgcc/jhu-usc.edu/humanmethylation27/methylation/"
@@ -215,6 +208,7 @@ library(illuminaio)
 
 
 	read.450k.con <- function(basenames, con, extended = FALSE, verbose = FALSE) {
+
 		require(illuminaio)
 		require(minfi)
 		require(downloader)

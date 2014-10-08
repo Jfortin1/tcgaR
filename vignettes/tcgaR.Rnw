@@ -22,6 +22,19 @@ BiocStyle::latex()
 % Introduction
 \section{Introduction}
 
+\section{Methylation data}
+
+<<>>=
+rgset <- getTCGA("kich")
+@
+
+\section{Clinical data}
+
+<<clinicalData,message=FALSE,warning=FALSE>>=
+library(tcgaR)
+clinical.kirc <- getClinicalData("kirc")
+names(clinical.kirc)[1:10]
+@
 
 \section*{Session info}
 

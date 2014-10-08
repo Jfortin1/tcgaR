@@ -1,1 +1,1 @@
-export(getTCGA)
+export(getTCGA, getClinicalData)

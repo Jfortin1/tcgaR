@@ -8,10 +8,10 @@ library(illuminaio)
 
 
 
+	
 
 
-
-	getTcga.meth <- function(cancer = cancer, platform = c("27k", "450k"), verbose = FALSE){
+	getTCGA.meth <- function(cancer = cancer, platform = c("27k", "450k"), verbose = FALSE){
 		platform <- match.arg(platform)
 		filenames <- tcga.meth.idat.names(cancer = cancer, platform = platform)
 		n <- length(filenames[[1]])
@@ -519,7 +519,7 @@ library(illuminaio)
 
 	extract.clinical.data <- function() {
 
-			cancers <- c("acc", "blca", "brca","coad","cesc" "dlbc","esca", "gbm","hnsc","kich",
+			cancers <- c("acc", "blca", "brca","coad","cesc" ,"dlbc","esca", "gbm","hnsc","kich",
 			"kirc","kirp","laml","lgg","lihc","luad","lusc", "meso","ov","paad",
 			"pcpg","prad","read","sarc","skcm","stad","thca","ucec","ucs","uvm")
 

@@ -1,0 +1,4 @@
+1. methylumi set for 27k data
+2. histone modification?
+3. mappings function. independent
+4. function for n.samples

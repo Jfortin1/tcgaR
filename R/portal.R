@@ -4,6 +4,7 @@ library(downloader)
 
 
 	getTCGA <- function(cancer, datatype = c("methylation"), platform = c("27k", "450k"), verbose=FALSE){
+		cancer <- tolower(cancer)	
 		datatype <- match.arg(datatype)
 		platform <- match.arg(platform)
 

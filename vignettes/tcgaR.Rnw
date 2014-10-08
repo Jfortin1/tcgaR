@@ -1,0 +1,41 @@
+% \VignetteIndexEntry{tcgaR}
+% \VignettePackage{shinyMethyl}
+% \VignetteDepends{BiocStyle}
+% \VignetteEngine{knitr::knitr}
+
+\documentclass[12pt]{article}
+\usepackage[numbers]{natbib}
+\usepackage{amsthm}
+\newcommand{\minfi}{\Biocpkg{minfi}}
+
+<<style, eval=TRUE, echo=FALSE, results="asis">>=
+BiocStyle::latex()
+@
+
+\title{tcgaR}
+\author{Jean-Philippe Fortin, Kasper Daniel Hansen}
+\begin{document}
+
+\maketitle{}
+\setcounter{secnumdepth}{1} 
+
+% Introduction
+\section{Introduction}
+
+
+\section*{Session info}
+
+Here is the output of \Rfunction{sessionInfo} on the system on which
+this document was compiled:
+<<sessionInfo, results="asis", echo=FALSE, eval=TRUE>>=
+toLatex(sessionInfo())
+@
+
+
+
+%\bibliography{tcgaR}
+
+\newpage
+
+\end{document}
+

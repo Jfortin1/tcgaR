@@ -34,6 +34,7 @@ library(illuminaio)
 
 
 	tcga.meth.mappings <- function(cancer , platform=c("27k","450k")) {
+		cancer <- tolower(cancer)
 		platform <- match.arg(platform)
 		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
 		if (platform == "27k"){
@@ -105,6 +106,7 @@ library(illuminaio)
 
 
 	tcga.meth.idat.names <- function(cancer, platform=c("27k", "450k")){
+		cancer <- tolower(cancer)
 		platform <- match.arg(platform)
 		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
 		if (platform == "27k"){

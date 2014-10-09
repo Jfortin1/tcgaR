@@ -5,6 +5,7 @@
 5. add function that list the cancers available.
 
 
+
 Vignette:
 - add table that describes the number of samples for each cancer type
 - add a pipeline for processing the rgset in minfi:

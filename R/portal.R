@@ -30,6 +30,26 @@ library(downloader)
 		clinical.data 
 	}
 
+
+	getCancers <- function(){
+		d <- getURL("https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/")
+		d <- strsplit(d, split="\n")
+		d <- unlist(d)
+		d <- d[grepl("<a href",d) & 
+				!grepl("tcgafiles",d) &
+				!grepl("README",d) &
+				!grepl("lost",d)
+			  ]
+
+		start.patt <- "<a href="
+		end.patt   <- ">"
+
+		start <- regexpr(start.patt,d) + nchar(start.patt)+1 
+		stop  <- regexpr(end.patt, d) -3
+		substr(d, start, stop)
+	}
+
+
 	# download.tcga <- function(datatype = "methylation", platform = c("27k", "450k"), cancers, 
 	# 	level = c(1,2,3), mappings = TRUE, destdir = getwd()){
 

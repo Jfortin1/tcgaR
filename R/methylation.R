@@ -19,10 +19,11 @@ library(methylumi)
 	
 
 
-	getTCGA.meth <- function(cancer, platform = c("27k", "450k"), verbose = FALSE){
+	getTCGA.meth <- function(cancer, platform = c("27k", "450k"), verbose = FALSE, what = c("both", "normal", "cancer")){
 		platform <- match.arg(platform)
+		what <- match.arg(what)
 		cancer <- tolower(cancer)
-		filenames <- tcga.meth.idat.names(cancer = cancer, platform = platform)
+		filenames <- tcga.meth.idat.names(cancer = cancer, platform = platform, what = what)
 		n <- length(filenames[[1]])
 		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
 		mappings  <- tcga.meth.mappings(cancer = cancer, platform = platform)

@@ -20,7 +20,22 @@ library(methylumi)
 		}
 		cancer <- tolower(unique(pd$diseaseabr))
 		clinicalData <- tcgaR:::getClinicalData(cancer)
+		pd.tcga.id <- substr(pd$TCGA.ID, 1,12)
+		pd.clinical <- clinicalData[match(pd.tcga.id, clinicalData$bcr_patient_barcode),]
+		new.var <- colnames(pd.clinical)
+		if (sum(new.var %in% colnames(pd))>0){
+			stop("Automatic addition of clinical data has already been done or cannot be done.")
+		}
+		if (ncol(pd.clinical) !=0){
+			pd <- cbind(pd, pd.clinical)
+		}
+		n <- ncol(pd.clinical)
+		cat(paste0(n, " clinical variables have been added \n"))
+		pData(object) <- pd
+		object
 	}
+
+
 
 
 	getTCGA.number <- function(cancer, platform = c("27k", "450k")){

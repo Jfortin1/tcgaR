@@ -27,7 +27,7 @@ library(downloader)
 		tail <- "/bcr/biotab/clin/nationwidechildrens.org_clinical_patient_"
 		url <- paste0(root,cancer, tail, cancer, ".txt")
 		clinical.data <- read.csv( text = getURL(url), sep="\t")
-		clinical.data
+		clinical.data 
 	}
 
 	# download.tcga <- function(datatype = "methylation", platform = c("27k", "450k"), cancers, 

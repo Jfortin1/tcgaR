@@ -620,7 +620,7 @@ library(methylumi)
 
 
 
-
+	# sleep() is necessary otherwise TCGA detects a robot.
 	cancers <- getCancers()
 	exist27k <- exist450k <- c()
 	for (i in 1:length(cancers)){

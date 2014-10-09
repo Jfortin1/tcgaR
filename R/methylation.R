@@ -6,6 +6,21 @@ library(methylumi)
 
 
 
+	addClinical <- function(object){
+		if (!is(object,"RGChannelSet") & 
+			!is(object, "MethylSet") & 
+			!is(object, "RatioSet") &
+			!is(object, "GenomicRatioSet") &
+			!is(object, "GenomicMethylSet")
+		) {stop("Object must be an RGChannelSet or a (Genomic)RatioSet or (Genomic)MethylSet")}
+
+		pd <- pData(object)
+		if (!("diseaseabr" %in% colnames(pd))){
+			stop("diseaseabr must be provided in the phenotype data")
+		}
+		cancer <- tolower(unique(pd$diseaseabr))
+		clinicalData <- tcgaR:::getClinicalData(cancer)
+	}
 
 
 	getTCGA.number <- function(cancer, platform = c("27k", "450k")){
@@ -41,11 +56,11 @@ library(methylumi)
 		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
 
 		if (platform=="450k"){
-			cat("[tcga.meth] Constructing the RGChannelSet \n")
+			cat("[getTCGA.meth] Constructing the RGChannelSet \n")
 			object <- read.450k.con(basenames = filenames$idat.name, con = filenames$idat.con, verbose = verbose)
 			pData(object) <- mappings
 		} else {
-			cat("[tcga.meth] Constructing the MethyLumi object \n")
+			cat("[getTCGA.meth] Constructing the MethyLumi object \n")
 			object <- read.27k.con(barcodes = filenames$idat.name, con = filenames$idat.con)
 			pData(object) <- mappings
 		}

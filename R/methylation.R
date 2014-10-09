@@ -19,7 +19,7 @@ library(methylumi)
 	
 
 
-	getTCGA.meth <- function(cancer, platform = c("27k", "450k"), verbose = FALSE, what = c("both", "normal", "cancer")){
+	getTCGA.meth <- function(cancer, platform = c("27k", "450k"), what = c("both", "normal", "cancer"), verbose = FALSE){
 		platform <- match.arg(platform)
 		what <- match.arg(what)
 		cancer <- tolower(cancer)

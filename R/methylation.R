@@ -118,6 +118,10 @@ library(methylumi)
 		csv.file  <- paste0(url, dir, toupper(cancer),".mappings.csv")
 		mappings <- read.csv(text = getURL(csv.file))
 	
+		if ("X" %in% colnames(mappings)){
+			mappings[,"X"] <- NULL
+		}
+		rownames(mappings) <- mappings$barcode
 		mappings
 	}
 
@@ -287,6 +291,46 @@ library(methylumi)
 	}
 
 
+
+	read.27k.con <- function(barcodes, con){
+		td = tempdir()
+
+		myIDATsToDFs <- function(barcodes, con, fileExts=list(Cy3="Grn.idat", Cy5="Red.idat")) { 
+			names(barcodes) = as.character(barcodes)
+			#listOfDFs = lapply(barcodes, methylumi:::IDATtoDF, fileExts=fileExts, idatPath=getwd())
+			listOfDFs <- list()
+			n <- length(barcodes)
+			for (kk in 1:n){
+				listOfDFs[[kk]] <- myIDATtoDF(barcode = barcodes[kk], con = con[kk])
+			}
+			names(listOfDFs) = as.character(barcodes)
+			return(listOfDFs)
+		} 
+
+		myIDATtoDF <- function(barcode,fileExts=list(Cy3="Grn.idat", Cy5="Red.idat"), con) { 
+		  processed = lapply(fileExts, function(chan) {
+		  	con.file <- file.path(con, paste(barcode, chan, sep="_"))
+		  	tf <- tempfile(tmpdir = td, fileext=".idat")
+		  	download(con.file, destfile=tf, quiet=TRUE)
+		    dat = readMethyLumIDAT(tf)
+		    return(list(Quants=as.data.frame(dat$Quants), 
+		                RunInfo=dat$RunInfo,
+		                ChipType=dat$ChipType))
+		  })
+		  probe.data = as.data.frame(lapply(processed, function(x) x[['Quants']]))
+		  attr(probe.data, 'RunInfo') = processed[[1]][['RunInfo']]
+		  attr(probe.data, 'ChipType') = processed[[1]][['ChipType']]
+		  return(probe.data)
+		} 
+
+
+		mlumi <- methylumi:::NChannelSetToMethyLumiSet(
+			methylumi:::DFsToNChannelSet(
+			myIDATsToDFs(barcodes = barcodes, con = con), 
+			IDAT=TRUE), n=FALSE, oob=TRUE)
+
+		return(mlumi[ sort(featureNames(mlumi)), ])
+	}
 
 
 
@@ -531,46 +575,6 @@ library(methylumi)
 
 
 
-
-	read.27k.con <- function(barcodes, con){
-		td = tempdir()
-
-		myIDATsToDFs <- function(barcodes, con, fileExts=list(Cy3="Grn.idat", Cy5="Red.idat")) { 
-			names(barcodes) = as.character(barcodes)
-			#listOfDFs = lapply(barcodes, methylumi:::IDATtoDF, fileExts=fileExts, idatPath=getwd())
-			listOfDFs <- list()
-			n <- length(barcodes)
-			for (kk in 1:n){
-				listOfDFs[[kk]] <- myIDATtoDF(barcode = barcodes[kk], con = con[kk])
-			}
-			names(listOfDFs) = as.character(barcodes)
-			return(listOfDFs)
-		} 
-
-		myIDATtoDF <- function(barcode,fileExts=list(Cy3="Grn.idat", Cy5="Red.idat"), con) { 
-		  processed = lapply(fileExts, function(chan) {
-		  	con.file <- file.path(con, paste(barcode, chan, sep="_"))
-		  	tf <- tempfile(tmpdir = td, fileext=".idat")
-		  	download(con.file, destfile=tf, quiet=TRUE)
-		    dat = readMethyLumIDAT(tf)
-		    return(list(Quants=as.data.frame(dat$Quants), 
-		                RunInfo=dat$RunInfo,
-		                ChipType=dat$ChipType))
-		  })
-		  probe.data = as.data.frame(lapply(processed, function(x) x[['Quants']]))
-		  attr(probe.data, 'RunInfo') = processed[[1]][['RunInfo']]
-		  attr(probe.data, 'ChipType') = processed[[1]][['ChipType']]
-		  return(probe.data)
-		} 
-
-
-		mlumi <- methylumi:::NChannelSetToMethyLumiSet(
-			methylumi:::DFsToNChannelSet(
-			myIDATsToDFs(barcodes = barcodes, con = con), 
-			IDAT=TRUE), n=FALSE, oob=TRUE)
-
-		return(mlumi[ sort(featureNames(mlumi)), ])
-	}
 
 
 

@@ -23,11 +23,22 @@ library(methylumi)
 		platform <- match.arg(platform)
 		what <- match.arg(what)
 		cancer <- tolower(cancer)
-		filenames <- tcga.meth.idat.names(cancer = cancer, platform = platform, what = what)
-		n <- length(filenames[[1]])
-		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
+		filenames <- tcga.meth.idat.names(cancer = cancer, platform = platform)
 		mappings  <- tcga.meth.mappings(cancer = cancer, platform = platform)
 		mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
+		if (what == "normal"){
+			retained.samples <- mappings$barcode[mappings$tissue == "Matched Normal"]
+		} else if (what == "tumor"){
+			retained.samples <- mappings$barcode[mappings$tissue != "Matched Normal" & mappings$tissue != "Cell Line Control"]
+		} else {
+			retained.samples <- mappings$barcode
+		}
+		mappings <- mappings[match(retained.samples, mappings$barcode),]
+		indices <- match(retained.samples, filenames[[2]])
+		filenames[[1]] <- filenames[[1]][indices]
+		filenames[[2]] <- filenames[[2]][indices]
+		n <- length(filenames[[1]])
+		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
 
 		if (platform=="450k"){
 			cat("[tcga.meth] Constructing the RGChannelSet \n")

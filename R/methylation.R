@@ -26,8 +26,8 @@ library(methylumi)
 		platform <- match.arg(platform)
 		what <- match.arg(what)
 		cancer <- tolower(cancer)
-		filenames <- tcga.meth.idat.names(cancer = cancer, platform = platform)
-		mappings  <- tcga.meth.mappings(cancer = cancer, platform = platform)
+		filenames <- .getIdatNames(cancer = cancer, platform = platform)
+		mappings  <- .getMethMappings(cancer = cancer, platform = platform)
 		mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
 		if (what == "normal"){
 			retained.samples <- mappings$barcode[mappings$tissue == "Matched Normal"]
@@ -61,7 +61,7 @@ library(methylumi)
 
 
 
-	tcga.meth.mappings <- function(cancer , platform=c("27k","450k")) {
+	.getMethMappings <- function(cancer , platform=c("27k","450k")) {
 		cancer <- tolower(cancer)
 		platform <- match.arg(platform)
 		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
@@ -137,7 +137,7 @@ library(methylumi)
 
 
 
-	tcga.meth.idat.names <- function(cancer, platform=c("27k", "450k")){
+	.getIdatNames <- function(cancer, platform=c("27k", "450k")){
 		cancer <- tolower(cancer)
 		platform <- match.arg(platform)
 		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
@@ -446,89 +446,89 @@ library(methylumi)
 
 
 
-	# Old function
-	extract.mappings <- function(platform=c("27k","450k")) {
+	# # Old function
+	# extract.mappings <- function(platform=c("27k","450k")) {
 
-		if (platform == "27k"){
-			cancers <- c("brca", "coad", "gbm", "kirc", "kirp", "laml", 
-				"luad", "lusc", "ov", "read", "stad", "ucec")
+	# 	if (platform == "27k"){
+	# 		cancers <- c("brca", "coad", "gbm", "kirc", "kirp", "laml", 
+	# 			"luad", "lusc", "ov", "read", "stad", "ucec")
 
-		} else {
-			cancers <- c("acc", "blca", "brca","coad","cesc", "dlbc","esca", "gbm","hnsc","kich",
-				"kirc","kirp","laml","lgg","lihc","luad","lusc", "meso","ov","paad",
-				"pcpg","prad","read","sarc","skcm","stad","thca","ucec","ucs","uvm")
-		}
+	# 	} else {
+	# 		cancers <- c("acc", "blca", "brca","coad","cesc", "dlbc","esca", "gbm","hnsc","kich",
+	# 			"kirc","kirp","laml","lgg","lihc","luad","lusc", "meso","ov","paad",
+	# 			"pcpg","prad","read","sarc","skcm","stad","thca","ucec","ucs","uvm")
+	# 	}
 
-		m <- length(cancers)
+	# 	m <- length(cancers)
 
-		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
-		if (platform == "27k"){
-			tail="/cgcc/jhu-usc.edu/humanmethylation27/methylation/"
-		} else {
-			tail="/cgcc/jhu-usc.edu/humanmethylation450/methylation/"
-		}
+	# 	root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
+	# 	if (platform == "27k"){
+	# 		tail="/cgcc/jhu-usc.edu/humanmethylation27/methylation/"
+	# 	} else {
+	# 		tail="/cgcc/jhu-usc.edu/humanmethylation450/methylation/"
+	# 	}
 
 
-		m <- length(cancers)
-		mappings <- vector("list", m)
+	# 	m <- length(cancers)
+	# 	mappings <- vector("list", m)
 
-		for (kk in 1:m){
+	# 	for (kk in 1:m){
 
-			cancer <- cancers[kk]
-			url <- paste0(root,cancer,tail)
+	# 		cancer <- cancers[kk]
+	# 		url <- paste0(root,cancer,tail)
 
-			d <- getURL(url)
-			d <- strsplit(d, split="\n")
-			d <- unlist(d)
-			d <- d[grepl("aux",d) & grepl("tar.gz",d) &!grepl("tar.gz.md5",d)]
+	# 		d <- getURL(url)
+	# 		d <- strsplit(d, split="\n")
+	# 		d <- unlist(d)
+	# 		d <- d[grepl("aux",d) & grepl("tar.gz",d) &!grepl("tar.gz.md5",d)]
 
-			extract.version <- function(x, cancer){
-				if (platform=="27k"){
-					start.patt <- paste0("jhu-usc.edu_",toupper(cancer),".HumanMethylation27.aux.")	
-				} else {
-					start.patt <- paste0("jhu-usc.edu_",toupper(cancer),".HumanMethylation450.aux.")
-				}
+	# 		extract.version <- function(x, cancer){
+	# 			if (platform=="27k"){
+	# 				start.patt <- paste0("jhu-usc.edu_",toupper(cancer),".HumanMethylation27.aux.")	
+	# 			} else {
+	# 				start.patt <- paste0("jhu-usc.edu_",toupper(cancer),".HumanMethylation450.aux.")
+	# 			}
 				
-				stop.patt  <- ".tar.gz"
-				start <- regexpr(start.patt,x)[1] + nchar(start.patt) 
-				stop  <- regexpr(stop.patt, x)[1] -1
-				substr(x, start, stop)
-			}
+	# 			stop.patt  <- ".tar.gz"
+	# 			start <- regexpr(start.patt,x)[1] + nchar(start.patt) 
+	# 			stop  <- regexpr(stop.patt, x)[1] -1
+	# 			substr(x, start, stop)
+	# 		}
 
-			versions <- unlist(lapply(as.list(d),function(x) extract.version(x, cancer=cancer)))
-			versions <- unlist(strsplit(versions, split="[.]"))
-			versions <- matrix(as.numeric(versions), ncol=3, byrow=TRUE)
+	# 		versions <- unlist(lapply(as.list(d),function(x) extract.version(x, cancer=cancer)))
+	# 		versions <- unlist(strsplit(versions, split="[.]"))
+	# 		versions <- matrix(as.numeric(versions), ncol=3, byrow=TRUE)
 
-			o <- order(versions[,1], versions[,2], versions[,3])
-			versions <- versions[o, ,drop=FALSE]
+	# 		o <- order(versions[,1], versions[,2], versions[,3])
+	# 		versions <- versions[o, ,drop=FALSE]
 
-			ids <- unique(versions[,1])
-			retained.versions <- matrix(NA, length(ids), 3)
-			for (i in 1:length(ids)){
-				indices <- which(versions[,1]==ids[i])
-				last.index <- indices[length(indices)]
-				retained.versions[i,] <- versions[last.index,]
-			}
+	# 		ids <- unique(versions[,1])
+	# 		retained.versions <- matrix(NA, length(ids), 3)
+	# 		for (i in 1:length(ids)){
+	# 			indices <- which(versions[,1]==ids[i])
+	# 			last.index <- indices[length(indices)]
+	# 			retained.versions[i,] <- versions[last.index,]
+	# 		}
 
-			versions <- paste(retained.versions[,1], 
-							  retained.versions[,2],
-							  retained.versions[,3], sep="."
-						)
+	# 		versions <- paste(retained.versions[,1], 
+	# 						  retained.versions[,2],
+	# 						  retained.versions[,3], sep="."
+	# 					)
 
-			if (platform=="27k"){
-				dir  <- paste0("jhu-usc.edu_",toupper(cancer),".HumanMethylation27.aux.",versions,"/")
-			} else {
-				dir  <- paste0("jhu-usc.edu_",toupper(cancer),".HumanMethylation450.aux.",versions,"/")
-			}
+	# 		if (platform=="27k"){
+	# 			dir  <- paste0("jhu-usc.edu_",toupper(cancer),".HumanMethylation27.aux.",versions,"/")
+	# 		} else {
+	# 			dir  <- paste0("jhu-usc.edu_",toupper(cancer),".HumanMethylation450.aux.",versions,"/")
+	# 		}
 			
-			csv.file  <- paste0(url, dir, toupper(cancer),".mappings.csv")
-			mappings[[kk]] <- read.csv(text = getURL(csv.file))
-			print(kk)
+	# 		csv.file  <- paste0(url, dir, toupper(cancer),".mappings.csv")
+	# 		mappings[[kk]] <- read.csv(text = getURL(csv.file))
+	# 		print(kk)
 
-		}
-		names(mappings) <- cancers
-		mappings
-	}
+	# 	}
+	# 	names(mappings) <- cancers
+	# 	mappings
+	# }
 
 
 
@@ -604,7 +604,7 @@ library(methylumi)
 
 
 
-	cancer.exists <- function(cancer, platform=c("27k", "450k")){
+	.cancer.exists <- function(cancer, platform=c("27k", "450k")){
 			cancer <- tolower(cancer)
 			platform <- match.arg(platform)
 			root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"

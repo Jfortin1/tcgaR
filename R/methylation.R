@@ -26,6 +26,10 @@ library(methylumi)
 		platform <- match.arg(platform)
 		what <- match.arg(what)
 		cancer <- tolower(cancer)
+
+		# Let's see if the cancer exist:
+		doesItExist <- .cancer.exist(cancer = cancer, platform = platform)
+
 		filenames <- .getIdatNames(cancer = cancer, platform = platform)
 		mappings  <- .getMethMappings(cancer = cancer, platform = platform)
 		mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
@@ -55,11 +59,7 @@ library(methylumi)
 		object
 	}
 
-
-
-
-
-
+	
 
 	.getMethMappings <- function(cancer , platform=c("27k","450k")) {
 		cancer <- tolower(cancer)
@@ -619,6 +619,16 @@ library(methylumi)
 	}
 
 
+
+
+	cancers <- getCancers()
+	exist27k <- exist450k <- c()
+	for (i in 1:length(cancers)){
+		exist27k[i] <- .cancer.exists(cancers[i], "27k")
+		exist450k[i] <- .cancer.exists(cancers[i], "450k")
+		Sys.sleep(5)
+		print(i)
+	}
 
 
 

@@ -2,6 +2,7 @@ library(RCurl)
 library(downloader)
 library(minfi)
 library(illuminaio)
+library(methylumi)
 
 
 
@@ -33,14 +34,11 @@ library(illuminaio)
 			pData(object) <- mappings
 		} else {
 			cat("[tcga.meth] Constructing the MethyLumi object \n")
-			object <- read.27k.con()
+			object <- read.27k.con(barcodes = filenames$idat.name, con = filenames$idat.con)
+			pData(object) <- mappings
 		}
-		
-		
-		
 		object
 	}
-
 
 
 
@@ -226,11 +224,6 @@ library(illuminaio)
 
 
 	read.450k.con <- function(basenames, con, extended = FALSE, verbose = FALSE) {
-
-		require(illuminaio)
-		require(minfi)
-		require(downloader)
-		require(RCurl)
 		td = tempdir()
 	    basenames <- sub("_Grn\\.idat$", "", basenames)
 	    basenames <- sub("_Red\\.idat$", "", basenames)
@@ -493,9 +486,6 @@ library(illuminaio)
 
 	# destdir : directory where the .tar.gz files will be saved
 	download.tcga.idat <- function(cancer.types, destdir, platform=c("27k","450k")){
-		require(RCurl)
-		require(downloader)
-
 		cat("Updating the downloads from the TCGA portal \n")
 		if (platform=="27k"){
 			links <- extract.links(platform="27k")
@@ -523,7 +513,6 @@ library(illuminaio)
 			download(url, destfile=file.path(destdir, name))
 			print(i)
 		}
-
 	}
 
 
@@ -531,70 +520,45 @@ library(illuminaio)
 
 
 
+	read.27k.con <- function(barcodes, con){
+		td = tempdir()
+
+		myIDATsToDFs <- function(barcodes, con, fileExts=list(Cy3="Grn.idat", Cy5="Red.idat")) { 
+			names(barcodes) = as.character(barcodes)
+			#listOfDFs = lapply(barcodes, methylumi:::IDATtoDF, fileExts=fileExts, idatPath=getwd())
+			listOfDFs <- list()
+			n <- length(barcodes)
+			for (kk in 1:n){
+				listOfDFs[[kk]] <- myIDATtoDF(barcode = barcodes[kk], con = con[kk])
+			}
+			names(listOfDFs) = as.character(barcodes)
+			return(listOfDFs)
+		} 
+
+		myIDATtoDF <- function(barcode,fileExts=list(Cy3="Grn.idat", Cy5="Red.idat"), con) { 
+		  processed = lapply(fileExts, function(chan) {
+		  	con.file <- file.path(con, paste(barcode, chan, sep="_"))
+		  	tf <- tempfile(tmpdir = td, fileext=".idat")
+		  	download(con.file, destfile=tf, quiet=TRUE)
+		    dat = readMethyLumIDAT(tf)
+		    return(list(Quants=as.data.frame(dat$Quants), 
+		                RunInfo=dat$RunInfo,
+		                ChipType=dat$ChipType))
+		  })
+		  probe.data = as.data.frame(lapply(processed, function(x) x[['Quants']]))
+		  attr(probe.data, 'RunInfo') = processed[[1]][['RunInfo']]
+		  attr(probe.data, 'ChipType') = processed[[1]][['ChipType']]
+		  return(probe.data)
+		} 
 
 
+		mlumi <- methylumi:::NChannelSetToMethyLumiSet(
+			methylumi:::DFsToNChannelSet(
+			myIDATsToDFs(barcodes = barcodes, con = con), 
+			IDAT=TRUE), n=FALSE, oob=TRUE)
 
+		return(mlumi[ sort(featureNames(mlumi)), ])
+	}
 
-
-root <- "https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/kirp/cgcc/jhu-usc.edu/humanmethylation27/methylation/jhu-usc.edu_KIRP.HumanMethylation27.Level_1.1.2.0"
-con <- rep(root,4)
-barcodes <-  c("5568914001_A", "5568914001_B","5568914001_C","5568914001_D")
-
-a <- read.27k.con(barcodes = barcodes, con = con)
-
-
-read.27k.con <- function(barcodes, con){
-	require(downloader)
-	require(RCurl)
-
-	myIDATsToDFs <- function(barcodes, con, fileExts=list(Cy3="Grn.idat", Cy5="Red.idat")) { 
-		names(barcodes) = as.character(barcodes)
-		#listOfDFs = lapply(barcodes, methylumi:::IDATtoDF, fileExts=fileExts, idatPath=getwd())
-		listOfDFs <- list()
-		n <- length(barcodes)
-		for (kk in 1:n){
-			listOfDFs[[kk]] <- myIDATtoDF(barcode = barcodes[kk], con = con[kk])
-		}
-		names(listOfDFs) = as.character(barcodes)
-		return(listOfDFs)
-	} 
-
-	myIDATtoDF <- function(barcode,fileExts=list(Cy3="Grn.idat", Cy5="Red.idat"), con) { 
-	  processed = lapply(fileExts, function(chan) {
-	  	con.file <- file.path(con, paste(barcode, chan, sep="_"))
-	  	tf <- tempfile(tmpdir = td, fileext=".idat")
-	  	download(con.file, destfile=tf, quiet=TRUE)
-	    dat = readMethyLumIDAT(tf)
-	    return(list(Quants=as.data.frame(dat$Quants), 
-	                RunInfo=dat$RunInfo,
-	                ChipType=dat$ChipType))
-	  })
-	  probe.data = as.data.frame(lapply(processed, function(x) x[['Quants']]))
-	  attr(probe.data, 'RunInfo') = processed[[1]][['RunInfo']]
-	  attr(probe.data, 'ChipType') = processed[[1]][['ChipType']]
-	  return(probe.data)
-	} 
-
-
-	mlumi <- methylumi:::NChannelSetToMethyLumiSet(
-		methylumi:::DFsToNChannelSet(
-		myIDATsToDFs(barcodes = barcodes, con = con), 
-		IDAT=TRUE), n=FALSE, oob=TRUE)
-
-	return(mlumi[ sort(featureNames(mlumi)), ])
-
-}
-
-# NOTE: add mappings.
-
-
-
-
-
-
-
-
-
-			
 
 

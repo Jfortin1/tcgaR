@@ -562,7 +562,7 @@ library(methylumi)
 		pData(object) <- pd
 		object
 	}
-	
+
 
 
 
@@ -600,6 +600,22 @@ library(methylumi)
 			download(url, destfile=file.path(destdir, name))
 			print(i)
 		}
+	}
+
+
+
+	cancer.exists <- function(cancer, platform=c("27k", "450k")){
+			cancer <- tolower(cancer)
+			platform <- match.arg(platform)
+			root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
+			if (platform == "27k"){
+				tail="/cgcc/jhu-usc.edu/humanmethylation27/methylation/"
+			} else {
+				tail="/cgcc/jhu-usc.edu/humanmethylation450/methylation/"
+			}
+			url <- paste0(root,cancer,tail)
+			exist <- url.exists(url)
+			exist
 	}
 
 

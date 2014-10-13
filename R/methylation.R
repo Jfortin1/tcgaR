@@ -14,7 +14,7 @@ library(methylumi)
 	getTCGA.number <- function(cancer, platform = c("27k", "450k")){
 		platform <- match.arg(platform)
 		cancer <- tolower(cancer)
-		filenames <- tcgaR:::tcga.meth.idat.names(cancer = cancer, platform = platform)
+		filenames <- tcgaR:::.getIdatNames(cancer = cancer, platform = platform)
 		n <- length(filenames[[1]])
 		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
 	}

@@ -12,7 +12,7 @@ then need to look if its coming from the same tissue.
 
 
 
-Vignette:
+Vignette: 
 - add table that describes the number of samples for each cancer type
 - add a pipeline for processing the rgset in minfi:
   1. preprocessNoob()
@@ -20,3 +20,5 @@ Vignette:
 - add a description of the barcode. 
 - Add discussion about the future development of bioc and class contained 
 for multi-assay datasets. 
+
+

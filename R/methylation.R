@@ -7,7 +7,7 @@ library(methylumi)
 
 
 	mappings.meth <- .getMethMappings("brca", "450k")
-	mappings.rna  <- .getRNAMappings("brca")
+	mappings.rna  <- .getRNAMappings("brca", "genes")
 
 
 

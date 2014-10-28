@@ -8,7 +8,7 @@ library(downloader)
 
 
 
-getTCGA.expression <- function(cancer, platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons"), what = c("both", "normal", "cancer"), verbose = FALSE){
+	getTCGA.expression <- function(cancer, platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons"), what = c("both", "normal", "cancer"), verbose = FALSE){
 		platform <- match.arg(platform)
 		what <- match.arg(what)
 		cancer <- tolower(cancer)
@@ -130,7 +130,7 @@ getTCGA.expression <- function(cancer, platform = c("genes","junctions","isoform
 		rna.names <- unlist(rna.names)
 		return(rna.names)
 	}
-
+	
 
 
 
@@ -138,10 +138,16 @@ getTCGA.expression <- function(cancer, platform = c("genes","junctions","isoform
 # barcode <- mappings$Comment..TCGA.Barcode.
 
 
-
+	
 	.getRNAMappings <- function(cancer, platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons")) {
 		cancer <- tolower(cancer)
-		platform <- match.arg(platform)	
+		platform <- match.arg(platform)
+		if (platform=="genes" | platform== "isoforms" | platform=="genes.normalized" |
+			platform== "isoforms.normalized" ){
+				platform <- paste0(platform, ".results")
+		} else {
+			platform <- paste0(platform, "_quantification")
+		}	
 		
 		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
 		tail <- "/cgcc/unc.edu/illuminahiseq_rnaseqv2/rnaseqv2/"
@@ -185,10 +191,10 @@ getTCGA.expression <- function(cancer, platform = c("genes","junctions","isoform
 		file <- paste0("unc.edu_",toupper(cancer),".IlluminaHiSeq_RNASeqV2.",versions, ".sdrf.txt")
 		file <- paste0(url, dir, file)
 		mappings <- read.csv(text = getURL(file), sep="\t")
-	
-		if ("X" %in% colnames(mappings)){
-			mappings[,"X"] <- NULL
-		}
+		mappings <- mappings[, c("Comment..TCGA.Barcode.", "Derived.Data.File")]
+		mappings <- mappings[grepl(platform,mappings$Derived.Data.File),]
+		barcodes <- .processBarcodes(mappings$Comment..TCGA.Barcode.)
+		mappings <- cbind(mappings, barcodes)
 		mappings
 	}
 

@@ -5,16 +5,13 @@ library(illuminaio)
 library(methylumi)
 
 
-
+	
 	mappings.meth <- .getMethMappings("brca", "450k")
 	mappings.rna  <- .getRNAMappings("brca", "genes")	
-	samples.meth  <- paste(mappings.meth$participant, mappings.meth$sample.code, sep="-")
-	samples.rna   <- paste(mappings.rna$participant, mappings.rna$sample.code, sep="-")
-	samples.common <- intersect(samples.meth, samples.rna)
-	common.participants <- intersect(mappings.meth$participant, mappings.rna$participant)
+	common.samples <- intersect(mappings.meth$sample.id, mappings.rna$sample.id)
+	
 
-	normal.meth <- mappings.meth[]
-
+	new <- mappings.meth[duplicated(mappings.meth$sample.id),]
 
 
 
@@ -131,9 +128,9 @@ library(methylumi)
 		if ("X" %in% colnames(mappings)){
 			mappings[,"X"] <- NULL
 		}
-		rownames(mappings) <- mappings$barcode
 		barcodes <- .processBarcodes(mappings$TCGA.ID)
 		mappings <- cbind(mappings, barcodes)
+		rownames(mappings) <- mappings$sample.id
 		mappings
 	}
 

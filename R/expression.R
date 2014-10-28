@@ -140,6 +140,7 @@ getTCGA.expression <- function(cancer, platform = c("genes","junctions","isoform
 
 
 
+# barcode <- mappings$Comment..TCGA.Barcode.
 
 
 	

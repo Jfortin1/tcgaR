@@ -6,6 +6,8 @@ library(methylumi)
 
 
 
+	mappings.meth <- .getMethMappings("brca", "450k")
+	mappings.rna  <- .getRNAMappings("brca")
 
 
 
@@ -125,6 +127,8 @@ library(methylumi)
 			mappings[,"X"] <- NULL
 		}
 		rownames(mappings) <- mappings$barcode
+		barcodes <- .processBarcodes(mappings$TCGA.ID)
+		mappings <- cbind(mappings, barcodes)
 		mappings
 	}
 

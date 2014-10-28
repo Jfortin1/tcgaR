@@ -18,3 +18,5 @@ Vignette:
   1. preprocessNoob()
   2. preprocessFunnorm()
 - add a description of the barcode. 
+- Add discussion about the future development of bioc and class contained 
+for multi-assay datasets. 

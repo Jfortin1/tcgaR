@@ -153,43 +153,10 @@ getTCGA.expression <- function(cancer, platform = c("genes","junctions","isoform
 	
 
 
-	getTCGA.meth <- function(cancer, platform = c("27k", "450k"), what = c("both", "normal", "cancer"), verbose = FALSE){
-		platform <- match.arg(platform)
-		what <- match.arg(what)
-		cancer <- tolower(cancer)
+	.getRNAMappings <- 
 
-		# Let's see if the cancer exist:
-		doesItExist <- .cancer.exist(cancer = cancer, platform = platform)
-
-		filenames <- .getIdatNames(cancer = cancer, platform = platform)
-		mappings  <- .getMethMappings(cancer = cancer, platform = platform)
-		mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
-		if (what == "normal"){
-			retained.samples <- mappings$barcode[mappings$tissue == "Matched Normal"]
-		} else if (what == "tumor"){
-			retained.samples <- mappings$barcode[mappings$tissue != "Matched Normal" & mappings$tissue != "Cell Line Control"]
-		} else {
-			retained.samples <- mappings$barcode
-		}
-		mappings <- mappings[match(retained.samples, mappings$barcode),]
-		indices <- match(retained.samples, filenames[[2]])
-		filenames[[1]] <- filenames[[1]][indices]
-		filenames[[2]] <- filenames[[2]][indices]
-		n <- length(filenames[[1]])
-		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
-
-		if (platform=="450k"){
-			cat("[getTCGA.meth] Constructing the RGChannelSet \n")
-			object <- read.450k.con(basenames = filenames$idat.name, con = filenames$idat.con, verbose = verbose)
-			pData(object) <- mappings
-		} else {
-			cat("[getTCGA.meth] Constructing the MethyLumi object \n")
-			object <- read.27k.con(barcodes = filenames$idat.name, con = filenames$idat.con)
-			pData(object) <- mappings
-		}
-		object
-	}
-
+	link <- "https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/coad/cgcc/unc.edu/illuminahiseq_rnaseqv2/rnaseqv2/unc.edu_COAD.IlluminaHiSeq_RNASeqV2.mage-tab.1.9.0/unc.edu_COAD.IlluminaHiSeq_RNASeqV2.1.9.0.sdrf.txt"
+	a <- read.csv(text=getURL(link), sep="\t")
 	
 
 	.getMethMappings <- function(cancer , platform=c("27k","450k")) {

@@ -3,6 +3,10 @@
 3. mappings function. independent
 4. function for n.samples
 5. add function that list the cancers available.
+6. for RNA data, add a function that changes the names of the samples
+according to the mappings
+7. Add a function that looks at the overlap of methylation data and gene expression data.
+
 
 
 

@@ -12,7 +12,8 @@
 	sampleType <- read.csv(file.path("/Users/Jean-Philippe/tcgaR/data/", "sampleType.csv"))
 	sample.code <- sample.type
 	sample.type <- as.character(sampleType$Definition[match(as.character(sample.type), sampleType$Code)])
-	data.frame(tss=tss, participant = participant, sample.type = sample.type, sample.code = sample.code, center = center)
+	sample.id   <- paste(participant, sample.code, sep="-")
+	data.frame(tss=tss, participant = participant, sample.type = sample.type, sample.code = sample.code, center = center, sample.id = sample.id)
 }
 
 #Tumor types range from 01 - 09, 

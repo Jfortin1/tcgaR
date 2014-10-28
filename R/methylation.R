@@ -7,8 +7,13 @@ library(methylumi)
 
 
 	mappings.meth <- .getMethMappings("brca", "450k")
-	mappings.rna  <- .getRNAMappings("brca", "genes")
+	mappings.rna  <- .getRNAMappings("brca", "genes")	
+	samples.meth  <- paste(mappings.meth$participant, mappings.meth$sample.code, sep="-")
+	samples.rna   <- paste(mappings.rna$participant, mappings.rna$sample.code, sep="-")
+	samples.common <- intersect(samples.meth, samples.rna)
+	common.participants <- intersect(mappings.meth$participant, mappings.rna$participant)
 
+	normal.meth <- mappings.meth[]
 
 
 

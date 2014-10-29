@@ -28,7 +28,7 @@ library(downloader)
 		mappings <- mappings[match(filenames, mappings$Derived.Data.File),]
 		sampleNames <- as.character(mappings$Comment..TCGA.Barcode.)
 
-		cat(paste0("[tcga.expression] ", n," samples have been found \n"))
+		cat(paste0("[getTCGA.expression] ", n," samples have been found \n"))
 
 		if (platform=="genes"){
 			cat("[getTCGA.expression] Constructing the gene expression matrix \n")

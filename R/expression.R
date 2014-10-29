@@ -8,6 +8,9 @@ library(downloader)
 
 
 
+
+a <- getTCGA.expression("blca", "genes", n=3)
+
 	getTCGA.expression <- function(cancer, 
 		platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons"), 
 		what = c("both", "normal", "cancer"), 
@@ -20,10 +23,17 @@ library(downloader)
 		# Let's see if the cancer exist:
 		#doesItExist <- .cancer.exists(cancer = cancer, platform = platform)
 
-		filenames <- .getRNANames(cancer = cancer, platform = platform)
-		if (!is.null(n)){
-			filenames <- filenames[1:n]
-		}
+		file.info <- .getRNANames(cancer=cancer, platform=platform)
+		filenames <- file.info$rna.files
+		filepaths <- file.info$rna.con
+		if (is.null(n)){ n <- length(filenames)}
+		
+		filenames <- filenames[1:n]
+		filepaths <- filepaths[1:n]
+		
+		mappings <- .getRNAMappings(cancer=cancer, platform=platform)
+		mappings <- mappings[match(filenames, mappings$Derived.Data.File),]
+		sampleNames <- as.character(mappings$Comment..TCGA.Barcode.)
 		# sampleNames <- substr(filenames, )
 		# mappings  <- .getRNAMappings(cancer = cancer, platform = platform)
 		# mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
@@ -39,16 +49,16 @@ library(downloader)
 		# filenames[[1]] <- filenames[[1]][indices]
 		# filenames[[2]] <- filenames[[2]][indices]
 		# n <- length(filenames[[1]])
-		# cat(paste0("[tcga.meth] ", n," samples have been found \n"))
+		cat(paste0("[tcga.expression] ", n," samples have been found \n"))
 
 		if (platform=="genes"){
-			cat("[getTCGA.expression] Constructing of the gene expression matrix \n")
+			cat("[getTCGA.expression] Constructing the gene expression matrix \n")
 			jj =1 
-			temp <- read.table(text = getURL(filenames[jj]), head=TRUE)
+			temp <- read.table(text = getURL(filepaths[jj]), head=TRUE)
 			raw <- temp[, "raw_count", drop=FALSE]
 			scaled <- temp[,"scaled_estimate", drop=FALSE]
-			for (jj in 2:length(filenames)){
-				temp <- read.table(text = getURL(filenames[jj]), head=TRUE)
+			for (jj in 2:length(filepaths)){
+				temp <- read.table(text = getURL(filepaths[jj]), head=TRUE)
 				raw <- cbind(raw, temp$raw_count)
 				scaled <- cbind(scaled, temp$scaled_estimate)
 				print(jj)
@@ -56,6 +66,7 @@ library(downloader)
 			rownames(raw) <- rownames(scaled) <- temp$gene_id
 			
 		}
+		colnames(raw) <- colnames(scaled) <- sampleNames
 		list(raw=raw, scaled=scaled)
 	}
 
@@ -63,7 +74,7 @@ library(downloader)
 
 
 
-	
+
 	.getRNANames <- function(cancer, platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons")){
 		cancer <- tolower(cancer)
 		platform <- match.arg(platform)
@@ -126,6 +137,7 @@ library(downloader)
 		
 		base.url <- paste0(root,cancer,tail)
 		rna.names <- list()
+		rna.files <- list()
 		for (kk in 1:length(subdirs)){
 			url <- paste0(root,cancer,tail, subdirs[kk])
 			d <- getURL(url)
@@ -135,11 +147,13 @@ library(downloader)
 			d <- unique(extract.rna.filename(d))
 			n <- length(d)
 			rna.names[[kk]] <- paste0(base.url,subdirs[kk], d)
+			rna.files[[kk]] <- d
 			#print(kk)
 			Sys.sleep(2) # Otherwise TCGA Portal complains. 
 		}
 		rna.names <- unlist(rna.names)
-		return(rna.names)
+		rna.files <- unlist(rna.files)
+		return(list(rna.con = rna.names, rna.files = rna.files))
 	}
 
 

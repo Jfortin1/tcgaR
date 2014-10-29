@@ -14,25 +14,25 @@ library(downloader)
 		cancer <- tolower(cancer)
 
 		# Let's see if the cancer exist:
-		doesItExist <- .cancer.exist(cancer = cancer, platform = platform)
+		#doesItExist <- .cancer.exists(cancer = cancer, platform = platform)
 
-		filenames <- .getRNANames(cancer = cancer, platform = platform)
-		sampleNames <- substr(filenames, )
-		mappings  <- .getMethMappings(cancer = cancer, platform = platform)
-		mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
-		if (what == "normal"){
-			retained.samples <- mappings$barcode[mappings$tissue == "Matched Normal"]
-		} else if (what == "tumor"){
-			retained.samples <- mappings$barcode[mappings$tissue != "Matched Normal" & mappings$tissue != "Cell Line Control"]
-		} else {
-			retained.samples <- mappings$barcode
-		}
-		mappings <- mappings[match(retained.samples, mappings$barcode),]
-		indices <- match(retained.samples, filenames[[2]])
-		filenames[[1]] <- filenames[[1]][indices]
-		filenames[[2]] <- filenames[[2]][indices]
-		n <- length(filenames[[1]])
-		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
+		filenames <- .getRNANames(cancer = cancer, platform = platform)[1:4]
+		# sampleNames <- substr(filenames, )
+		# mappings  <- .getRNAMappings(cancer = cancer, platform = platform)
+		# mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
+		# if (what == "normal"){
+		# 	retained.samples <- mappings$barcode[mappings$tissue == "Matched Normal"]
+		# } else if (what == "tumor"){
+		# 	retained.samples <- mappings$barcode[mappings$tissue != "Matched Normal" & mappings$tissue != "Cell Line Control"]
+		# } else {
+		# 	retained.samples <- mappings$barcode
+		# }
+		# mappings <- mappings[match(retained.samples, mappings$barcode),]
+		# indices <- match(retained.samples, filenames[[2]])
+		# filenames[[1]] <- filenames[[1]][indices]
+		# filenames[[2]] <- filenames[[2]][indices]
+		# n <- length(filenames[[1]])
+		# cat(paste0("[tcga.meth] ", n," samples have been found \n"))
 
 		if (platform=="genes"){
 			cat("[getTCGA.expression] Constructing of the gene expression matrix \n")
@@ -40,7 +40,7 @@ library(downloader)
 			temp <- read.table(text = getURL(filenames[jj]), head=TRUE)
 			raw <- temp[, "raw_count", drop=FALSE]
 			scaled <- temp[,"scaled_estimate", drop=FALSE]
-			for (jj in 1:length(filenames)){
+			for (jj in 2:length(filenames)){
 				temp <- read.table(text = getURL(filenames[jj]), head=TRUE)
 				raw <- cbind(raw, temp$raw_count)
 				scaled <- cbind(scaled, temp$scaled_estimate)
@@ -49,7 +49,7 @@ library(downloader)
 			rownames(raw) <- rownames(scaled) <- temp$gene_id
 			
 		}
-		object
+		list(raw=raw, scaled=scaled)
 	}
 
 
@@ -130,7 +130,7 @@ library(downloader)
 		rna.names <- unlist(rna.names)
 		return(rna.names)
 	}
-	
+
 
 
 
@@ -138,7 +138,7 @@ library(downloader)
 # barcode <- mappings$Comment..TCGA.Barcode.
 
 
-	
+
 	.getRNAMappings <- function(cancer, platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons")) {
 		cancer <- tolower(cancer)
 		platform <- match.arg(platform)
@@ -209,21 +209,6 @@ library(downloader)
 		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
 	}
 
-
-	# Need to be modified for RNA:
-	.cancer.exists <- function(cancer, platform=c("27k", "450k")){
-			cancer <- tolower(cancer)
-			platform <- match.arg(platform)
-			root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
-			if (platform == "27k"){
-				tail="/cgcc/jhu-usc.edu/humanmethylation27/methylation/"
-			} else {
-				tail="/cgcc/jhu-usc.edu/humanmethylation450/methylation/"
-			}
-			url <- paste0(root,cancer,tail)
-			exist <- url.exists(url)
-			exist
-	}
 
 
 

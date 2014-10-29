@@ -13,7 +13,6 @@ a <- getTCGA.expression("blca", "genes", n=3)
 
 	getTCGA.expression <- function(cancer, 
 		platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons"), 
-		what = c("both", "normal", "cancer"), 
 		verbose = FALSE, n=NULL){
 
 		platform <- match.arg(platform)
@@ -34,21 +33,7 @@ a <- getTCGA.expression("blca", "genes", n=3)
 		mappings <- .getRNAMappings(cancer=cancer, platform=platform)
 		mappings <- mappings[match(filenames, mappings$Derived.Data.File),]
 		sampleNames <- as.character(mappings$Comment..TCGA.Barcode.)
-		# sampleNames <- substr(filenames, )
-		# mappings  <- .getRNAMappings(cancer = cancer, platform = platform)
-		# mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
-		# if (what == "normal"){
-		# 	retained.samples <- mappings$barcode[mappings$tissue == "Matched Normal"]
-		# } else if (what == "tumor"){
-		# 	retained.samples <- mappings$barcode[mappings$tissue != "Matched Normal" & mappings$tissue != "Cell Line Control"]
-		# } else {
-		# 	retained.samples <- mappings$barcode
-		# }
-		# mappings <- mappings[match(retained.samples, mappings$barcode),]
-		# indices <- match(retained.samples, filenames[[2]])
-		# filenames[[1]] <- filenames[[1]][indices]
-		# filenames[[2]] <- filenames[[2]][indices]
-		# n <- length(filenames[[1]])
+
 		cat(paste0("[tcga.expression] ", n," samples have been found \n"))
 
 		if (platform=="genes"){

@@ -5,12 +5,6 @@ library(downloader)
 
 
 
-
-
-
-
-a <- getTCGA.expression("blca", "genes", n=3)
-
 	getTCGA.expression <- function(cancer, 
 		platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons"), 
 		verbose = FALSE, n=NULL){
@@ -54,6 +48,8 @@ a <- getTCGA.expression("blca", "genes", n=3)
 		colnames(raw) <- colnames(scaled) <- sampleNames
 		list(raw=raw, scaled=scaled)
 	}
+
+
 
 
 
@@ -145,8 +141,6 @@ a <- getTCGA.expression("blca", "genes", n=3)
 
 
 
-# barcode <- mappings$Comment..TCGA.Barcode.
-
 
 
 	.getRNAMappings <- function(cancer, platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons")) {
@@ -207,6 +201,8 @@ a <- getTCGA.expression("blca", "genes", n=3)
 		mappings <- cbind(mappings, barcodes)
 		mappings
 	}
+
+
 
 
 

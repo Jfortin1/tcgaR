@@ -8,7 +8,11 @@ library(downloader)
 
 
 
-	getTCGA.expression <- function(cancer, platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons"), what = c("both", "normal", "cancer"), verbose = FALSE){
+	getTCGA.expression <- function(cancer, 
+		platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons"), 
+		what = c("both", "normal", "cancer"), 
+		verbose = FALSE, n=NULL){
+
 		platform <- match.arg(platform)
 		what <- match.arg(what)
 		cancer <- tolower(cancer)
@@ -16,7 +20,10 @@ library(downloader)
 		# Let's see if the cancer exist:
 		#doesItExist <- .cancer.exists(cancer = cancer, platform = platform)
 
-		filenames <- .getRNANames(cancer = cancer, platform = platform)[1:4]
+		filenames <- .getRNANames(cancer = cancer, platform = platform)
+		if (!is.null(n)){
+			filenames <- filenames[1:n]
+		}
 		# sampleNames <- substr(filenames, )
 		# mappings  <- .getRNAMappings(cancer = cancer, platform = platform)
 		# mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
@@ -53,6 +60,10 @@ library(downloader)
 	}
 
 
+
+
+
+	
 	.getRNANames <- function(cancer, platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons")){
 		cancer <- tolower(cancer)
 		platform <- match.arg(platform)

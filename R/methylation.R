@@ -15,6 +15,9 @@ library(methylumi)
 
 
 
+
+
+
 	getTCGA.number <- function(cancer, platform = c("27k", "450k")){
 		platform <- match.arg(platform)
 		cancer <- tolower(cancer)
@@ -24,6 +27,9 @@ library(methylumi)
 	}
 
 	
+
+
+
 
 
 	getTCGA.meth <- function(cancer, platform = c("27k", "450k"), what = c("both", "normal", "cancer"), verbose = FALSE){
@@ -64,6 +70,10 @@ library(methylumi)
 	}
 
 	
+
+
+
+
 
 	.getMethMappings <- function(cancer , platform=c("27k","450k")) {
 		cancer <- tolower(cancer)
@@ -133,6 +143,9 @@ library(methylumi)
 		rownames(mappings) <- mappings$sample.id
 		mappings
 	}
+
+
+
 
 
 
@@ -248,6 +261,9 @@ library(methylumi)
 
 
 
+
+
+
 	read.450k.con <- function(basenames, con, extended = FALSE, verbose = FALSE) {
 		td = tempdir()
 	    basenames <- sub("_Grn\\.idat$", "", basenames)
@@ -298,6 +314,15 @@ library(methylumi)
 	    stime <- (ptime2 - ptime1)[3]
 	    out
 	}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -610,33 +635,6 @@ library(methylumi)
 
 
 
-	.cancer.exists <- function(cancer, platform=c("27k", "450k")){
-			cancer <- tolower(cancer)
-			platform <- match.arg(platform)
-			root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
-			if (platform == "27k"){
-				tail="/cgcc/jhu-usc.edu/humanmethylation27/methylation/"
-			} else {
-				tail="/cgcc/jhu-usc.edu/humanmethylation450/methylation/"
-			}
-			url <- paste0(root,cancer,tail)
-			exist <- url.exists(url)
-			exist
-	}
-
-
-
-	# sleep() is necessary otherwise TCGA detects a robot.
-	# cancers <- getCancers()
-	# exist27k <- exist450k <- c()
-	# for (i in 1:length(cancers)){
-	# 	exist27k[i] <- .cancer.exists(cancers[i], "27k")
-	# 	exist450k[i] <- .cancer.exists(cancers[i], "450k")
-	# 	Sys.sleep(5)
-	# 	print(i)
-	# }
-
-	
 
 
 

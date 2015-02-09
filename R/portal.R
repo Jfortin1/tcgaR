@@ -3,7 +3,7 @@ library(downloader)
 
 
 
-getTCGA <- function(cancer, datatype = c("methylation", "expression"), platform = c("27k", "450k"), verbose=FALSE){
+getTCGA <- function(cancer, datatype = c("methylation", "expression"), platform = c("27k", "450k"), verbose=FALSE, n.samples=NULL){
 	cancer <- tolower(cancer)	
 	datatype <- match.arg(datatype)
 	platform <- match.arg(platform)
@@ -13,7 +13,7 @@ getTCGA <- function(cancer, datatype = c("methylation", "expression"), platform 
 		stop("Only methylation and expression data are supported for the moment")
 	}
 	if (datatype=="methylation"){
-		object <- getTCGA.meth(cancer = cancer, platform = platform, verbose = verbose)
+		object <- getTCGA.meth(cancer = cancer, platform = platform, verbose = verbose, n.samples = n.samples)
 	} else if (datatype == "expression"){
 		#object <- 
 	}

@@ -32,7 +32,7 @@
 
 
 
-	getTCGA.meth <- function(cancer, platform = c("27k", "450k"), what = c("both", "normal", "cancer"), verbose = FALSE){
+	getTCGA.meth <- function(cancer, platform = c("27k", "450k"), what = c("both", "normal", "cancer"), verbose = FALSE, n.samples=NULL){
 		platform <- match.arg(platform)
 		what <- match.arg(what)
 		cancer <- tolower(cancer)
@@ -41,6 +41,9 @@
 		doesItExist <- .cancer.exists(cancer = cancer, platform = platform)
 
 		filenames <- .getIdatNames(cancer = cancer, platform = platform)
+		if (!is.null(n.samples)){
+			filenames <- filenames[1:n.samples]
+		}
 		mappings  <- .getMethMappings(cancer = cancer, platform = platform)
 		mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
 		if (what == "normal"){

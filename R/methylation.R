@@ -38,7 +38,7 @@ library(methylumi)
 		cancer <- tolower(cancer)
 
 		# Let's see if the cancer exist:
-		doesItExist <- .cancer.exist(cancer = cancer, platform = platform)
+		doesItExist <- .cancer.exists(cancer = cancer, platform = platform)
 
 		filenames <- .getIdatNames(cancer = cancer, platform = platform)
 		mappings  <- .getMethMappings(cancer = cancer, platform = platform)
@@ -138,9 +138,9 @@ library(methylumi)
 		if ("X" %in% colnames(mappings)){
 			mappings[,"X"] <- NULL
 		}
-		barcodes <- .processBarcodes(mappings$TCGA.ID)
-		mappings <- cbind(mappings, barcodes)
-		rownames(mappings) <- mappings$sample.id
+		#barcodes <- .processBarcodes(mappings$TCGA.ID)
+		#mappings <- cbind(mappings, barcodes)
+		#rownames(mappings) <- mappings$sample.id
 		mappings
 	}
 

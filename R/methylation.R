@@ -40,9 +40,10 @@
 		# Let's see if the cancer exist:
 		doesItExist <- .cancer.exists(cancer = cancer, platform = platform)
 
+		cat(paste0("[getTCGA.meth] Searching for samples ... \n"))
 		filenames <- .getIdatNames(cancer = cancer, platform = platform)
 		if (!is.null(n.samples)){
-			filenames <- filenames[1:n.samples,, drop="FALSE"]
+			filenames <- lapply(filenames, function(x) x[1:n.samples])
 		}
 		mappings  <- .getMethMappings(cancer = cancer, platform = platform)
 		mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]
@@ -58,7 +59,7 @@
 		filenames[[1]] <- filenames[[1]][indices]
 		filenames[[2]] <- filenames[[2]][indices]
 		n <- length(filenames[[1]])
-		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
+		cat(paste0("[getTCGA.meth] ", n," samples have been found \n"))
 
 		if (platform=="450k"){
 			cat("[getTCGA.meth] Constructing the RGChannelSet \n")

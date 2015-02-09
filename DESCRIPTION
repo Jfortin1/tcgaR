@@ -4,7 +4,7 @@ Version: 0.99.0
 Authors@R: c(person("Jean-Philippe", "Fortin", role = c("cre", "aut"),
                     email = "jfortin@jhsph.edu"),
              person(c("Kasper", "Daniel"), "Hansen", role = "aut"))
-Depends: R (>= 3.0.0), illuminaio, minfi, downloader, RCurl
+Depends: R (>= 3.0.0), illuminaio, minfi, methylumi, downloader, RCurl
 Imports: 
 Suggests: BiocStyle, RUnit, digest, knitr
 Description: R interface for the The Cancer Genome Atlas (TCGA) portal

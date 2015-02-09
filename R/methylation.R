@@ -1,17 +1,17 @@
-library(RCurl)
-library(downloader)
-library(minfi)
-library(illuminaio)
-library(methylumi)
+#library(RCurl)
+#library(downloader)
+#library(minfi)
+#library(illuminaio)
+#library(methylumi)
 
 
 	
-	mappings.meth <- .getMethMappings("brca", "450k")
-	mappings.rna  <- .getRNAMappings("brca", "genes")	
-	common.samples <- intersect(mappings.meth$sample.id, mappings.rna$sample.id)
+	#mappings.meth <- .getMethMappings("brca", "450k")
+	#mappings.rna  <- .getRNAMappings("brca", "genes")	
+	#common.samples <- intersect(mappings.meth$sample.id, mappings.rna$sample.id)
 	
 
-	new <- mappings.meth[duplicated(mappings.meth$sample.id),]
+	#new <- mappings.meth[duplicated(mappings.meth$sample.id),]
 
 
 

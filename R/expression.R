@@ -1,29 +1,29 @@
-library(RCurl)
-library(downloader)
-
 
 
 
 
 	getTCGA.expression <- function(cancer, 
 		platform = c("genes","junctions","isoforms","genes.normalized","isoforms.normalized", "exons"), 
-		verbose = FALSE, n=NULL){
+		verbose = FALSE, n.samples=NULL){
 
 		platform <- match.arg(platform)
-		what <- match.arg(what)
+		#what <- match.arg(what)
 		cancer <- tolower(cancer)
 
 		# Let's see if the cancer exist:
 		#doesItExist <- .cancer.exists(cancer = cancer, platform = platform)
 
+		cat("[getTCGA.expression] Searching the samples ... \n")
 		file.info <- .getRNANames(cancer=cancer, platform=platform)
 		filenames <- file.info$rna.files
 		filepaths <- file.info$rna.con
-		if (is.null(n)){ n <- length(filenames)}
+		if (is.null(n.samples)){ n.samples <- length(filenames)}
 		
-		filenames <- filenames[1:n]
-		filepaths <- filepaths[1:n]
+
+		filenames <- filenames[1:n.samples]
+		filepaths <- filepaths[1:n.samples]
 		
+
 		mappings <- .getRNAMappings(cancer=cancer, platform=platform)
 		mappings <- mappings[match(filenames, mappings$Derived.Data.File),]
 		sampleNames <- as.character(mappings$Comment..TCGA.Barcode.)

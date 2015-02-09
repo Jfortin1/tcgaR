@@ -42,7 +42,7 @@
 
 		filenames <- .getIdatNames(cancer = cancer, platform = platform)
 		if (!is.null(n.samples)){
-			filenames <- filenames[1:n.samples]
+			filenames <- filenames[1:n.samples,, drop="FALSE"]
 		}
 		mappings  <- .getMethMappings(cancer = cancer, platform = platform)
 		mappings  <- mappings[match(filenames$idat.name, mappings$barcode),]

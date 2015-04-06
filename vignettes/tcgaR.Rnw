@@ -41,8 +41,8 @@ Data: April 6 2015
 
 \begin{table}[!ht]
 \begin{center}
-    \begin{tabular}{ c|l|c|c|c}
-  Abb. & Full name & 27k & 450k & Reference \\
+    \begin{tabular}{ c|l|c|c}
+  Abb. & Full name & 27k & 450k  \\
   \hline
   ACC & Adrenocortical carcinoma && \checkmark \\
   BLCA & Bladder Urothelial Carcinoma && \checkmark\\
@@ -83,6 +83,40 @@ UVM & Uveal Melanoma && \checkmark
 \caption{Hi-C data sources.}\label{tab:hicdata}
 \end{table}
 
+\section*{DNA Methylation 27k data}
+
+
+\begin{table}[!ht]
+\begin{center}
+    \begin{tabular}{ c|l|c|c}
+  Abb. & Full name & N Normal & N Tumor \\
+  \hline
+  BRCA & Breast invasive carcinoma & 27 & 318\\
+COAD & Colon adenocarcinoma & 37 & 166\\
+GBM & Glioblastoma multiforme & 0 & 296\\
+KIRC &Kidney renal clear cell carcinoma & 199 & 219\\
+KIRP& Kidney renal papillary cell carcinoma&  5 & 16 \\
+LAML & Acute Myeloid Leukemia & 0 & 194\\
+LUAD & Lung adenocarcinoma& 24 & 127 \\
+LUSC & Lung squamous cell carcinoma& 27 & 134\\
+OV & Ovarian serous cystadenocarcinoma& 14 & 603\\
+READ & Rectum adenocarcinoma& 5 & 68\\
+STAD & Stomach adenocarcinoma& 59 & 82\\
+UCEC & Uterine Corpus Endometrial Carcinoma & 1 & 117\\
+    \end{tabular}
+\end{center}
+\caption{Hi-C data sources.}\label{tab:hicdata}
+\end{table}
+
+
+
+\subsection*{Get methylation mappings}
+
+The function \Rfunction{getMethMappings} allows to get all the mappings. 
+
+\section*{Clinical data}
+
+The function \Rfunction{getClinicalData} allows to get all the available data for each cancer type. 
 
 \bioccomment{some comment}
 

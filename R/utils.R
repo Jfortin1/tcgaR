@@ -32,6 +32,9 @@
 		)
 	}
 
+	
+
+
 
 
 
@@ -69,8 +72,6 @@
 	}
 
 
-
-
 	getClinicalData <- function(cancer = c("acc", "blca", "brca","coad","cesc" ,"dlbc","esca", "gbm","hnsc","kich",
 	 		"kirc","kirp","laml","lgg","lihc","luad","lusc", "meso","ov","paad",
 	 		"pcpg","prad","read","sarc","skcm","stad","thca","ucec","ucs","uvm")){
@@ -79,15 +80,30 @@
 		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"
 		tail <- "/bcr/biotab/clin/nationwidechildrens.org_clinical_patient_"
 		url <- paste0(root,cancer, tail, cancer, ".txt")
-		clinical.data <- read.csv( text = getURL(url), sep="\t")
+		clinical.data <- read.csv(text = getURL(url), sep="\t")
+		clinical.data <- clinical.data[-c(1,2),]
 		clinical.data 
 	}
 
 
 
+	a <- getClinicalData("gbm")
 
 
+	# cancers <- getCancers()
+	# cancers.27k <- unlist(lapply(cancers, function(x) {
+	# 	Sys.sleep(5)
+	# 	.cancer.exists(x)
+	# }))
 
+	# cancers.450k <- unlist(lapply(cancers, function(x) {
+	# 	Sys.sleep(5)
+	# 	.cancer.exists(x, "450k")
+	# }))
+
+	# data <- cbind(cancers, cancers.27k, cancers.450k)
+	# bad <- c("cntl", "fppp", "lnnh", "misc")
+	# data <- data[-match(bad, cancers),]
 
 
 

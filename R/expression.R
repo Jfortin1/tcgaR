@@ -1,5 +1,8 @@
 
 
+#library(RCurl)
+#data <- getTCGA.expression("prad", "genes", TRUE,3)
+
 
 
 	getTCGA.expression <- function(cancer, 
@@ -22,6 +25,7 @@
 
 		filenames <- filenames[1:n.samples]
 		filepaths <- filepaths[1:n.samples]
+		n <- length(filenames)
 		
 
 		mappings <- .getRNAMappings(cancer=cancer, platform=platform)
@@ -158,8 +162,7 @@
 		url <- paste0(root,cancer,tail)
 
 		d <- getURL(url)
-		d <- strsplit(d, split="\n")
-		d <- unlist(d)
+		d <- unlist(strsplit(d, split="\n"))
 		d <- d[grepl("mage-tab",d) & grepl("tar.gz",d) &!grepl("tar.gz.md5",d)]
 
 		extract.version <- function(x, cancer){
@@ -207,13 +210,7 @@
 
 
 
-	getTCGA.number <- function(cancer, platform = c("27k", "450k")){
-		platform <- match.arg(platform)
-		cancer <- tolower(cancer)
-		filenames <- tcgaR:::.getIdatNames(cancer = cancer, platform = platform)
-		n <- length(filenames[[1]])
-		cat(paste0("[tcga.meth] ", n," samples have been found \n"))
-	}
+
 
 
 

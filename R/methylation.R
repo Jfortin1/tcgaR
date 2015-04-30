@@ -15,6 +15,7 @@
 
 
 
+	#a <- getTCGA.number("coad", "27k")
 
 
 
@@ -75,7 +76,7 @@
 
 	
 
-
+	#a <- .getMethMappings("gbm")
 
 
 
@@ -154,9 +155,8 @@
 
 
 
-
-
-
+	#cancer <- "coad"
+	#platform <- "450k"
 
 
 
@@ -256,6 +256,7 @@
 
 
 
+	#a <- .getIdatNames("coad", "450k")
 
 
 

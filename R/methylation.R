@@ -1,11 +1,3 @@
-#library(RCurl)
-#library(downloader)
-#library(minfi)
-#library(illuminaio)
-#library(methylumi)
-
-
-	
 	#mappings.meth <- .getMethMappings("brca", "450k")
 	#mappings.rna  <- .getRNAMappings("brca", "genes")	
 	#common.samples <- intersect(mappings.meth$sample.id, mappings.rna$sample.id)
@@ -17,6 +9,8 @@
 
 	#a <- getTCGA.number("coad", "27k")
 
+	#a <- getTCGA.meth("coad", "27k", what="both",  n.sample=10)
+	#a <- getTCGA.meth("coad", "450k", what="both", n.sample=10)
 
 
 	getTCGA.number <- function(cancer, platform = c("27k", "450k")){
@@ -29,14 +23,15 @@
 
 	
 
+	#a <- preprocessNoob(a)
 
 
-
+	
 
 	getTCGA.meth <- function(cancer, platform = c("27k", "450k"), what = c("both", "normal", "cancer"), verbose = FALSE, n.samples=NULL){
 		platform <- match.arg(platform)
-		what <- match.arg(what)
-		cancer <- tolower(cancer)
+		what     <- match.arg(what)
+		cancer   <- tolower(cancer)
 
 		# Let's see if the cancer exist:
 		doesItExist <- .cancer.exists(cancer = cancer, platform = platform)

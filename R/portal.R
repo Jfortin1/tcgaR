@@ -1,5 +1,3 @@
-library(RCurl)
-library(downloader)
 
 
 

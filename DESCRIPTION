@@ -1,6 +1,6 @@
 Package: tcgaR
 Title: Interface in R for the TCGA Portal
-Version: 0.99.0
+Version: 0.99.1
 Authors@R: c(person("Jean-Philippe", "Fortin", role = c("cre", "aut"),
                     email = "jfortin@jhsph.edu"),
              person(c("Kasper", "Daniel"), "Hansen", role = "aut"))
@@ -11,4 +11,4 @@ Description: R interface for the The Cancer Genome Atlas (TCGA) portal
 Url: https://github.com/Jfortin1/tcgaR
 VignetteBuilder: knitr
 License: Artistic-2.0
-biocViews:
+biocViews: DNAMethylation

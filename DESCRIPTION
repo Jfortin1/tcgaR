@@ -6,7 +6,7 @@ Authors@R: c(person("Jean-Philippe", "Fortin", role = c("cre", "aut"),
              person(c("Kasper", "Daniel"), "Hansen", role = "aut"))
 Depends: R (>= 3.0.0), illuminaio, minfi (>= 1.18.2), methylumi (>= 2.18.2), downloader, RCurl
 Suggests: BiocStyle, RUnit, digest, knitr
-Description: R interface for the The Cancer Genome Atlas (TCGA) portal
+Description: R interface for the The Cancer Genome Atlas (TCGA) portal to download methylation data from Illumina 27k and 450k arrays. 
 Url: https://github.com/Jfortin1/tcgaR
 VignetteBuilder: knitr
 License: Artistic-2.0

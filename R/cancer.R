@@ -1,4 +1,4 @@
-cancer.exists.meth <- function(cancer, platform=c("27k", "450k")){
+cancer.exists.meth <- function(cancer, platform=c("450k", "27k")){
 		cancer <- tolower(cancer)
 		platform <- match.arg(platform)
 		root="https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/"

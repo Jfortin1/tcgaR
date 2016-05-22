@@ -1,1 +1,1 @@
-export(getTCGA, getClinicalData, getCancers)
+export(getTCGA, getClinicalData, getCancers, cancer.exists, cancer.exists.meth, getMethMappings)

@@ -1,11 +1,10 @@
 Package: tcgaR
 Title: Interface in R for the TCGA Portal
-Version: 0.99.1
+Version: 0.99.2
 Authors@R: c(person("Jean-Philippe", "Fortin", role = c("cre", "aut"),
                     email = "jfortin@jhsph.edu"),
              person(c("Kasper", "Daniel"), "Hansen", role = "aut"))
-Depends: R (>= 3.0.0), illuminaio, minfi (>= 1.18.2), methylumi, downloader, RCurl
-Imports: 
+Depends: R (>= 3.0.0), illuminaio, minfi (>= 1.18.2), methylumi (>=2.18.2), downloader, RCurl
 Suggests: BiocStyle, RUnit, digest, knitr
 Description: R interface for the The Cancer Genome Atlas (TCGA) portal
 Url: https://github.com/Jfortin1/tcgaR

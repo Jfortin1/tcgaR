@@ -377,34 +377,34 @@ getMethMappings <- function(cancer , platform=c("27k","450k")) {
 
 
 
-addClinical <- function(object){
-	if (!is(object,"RGChannelSet") & 
-		!is(object, "MethylSet") & 
-		!is(object, "RatioSet") &
-		!is(object, "GenomicRatioSet") &
-		!is(object, "GenomicMethylSet")
-	) {stop("Object must be an RGChannelSet or a (Genomic)RatioSet or (Genomic)MethylSet")}
+# addClinical <- function(object){
+# 	if (!is(object,"RGChannelSet") & 
+# 		!is(object, "MethylSet") & 
+# 		!is(object, "RatioSet") &
+# 		!is(object, "GenomicRatioSet") &
+# 		!is(object, "GenomicMethylSet")
+# 	) {stop("Object must be an RGChannelSet or a (Genomic)RatioSet or (Genomic)MethylSet")}
 
-	pd <- pData(object)
-	if (!("diseaseabr" %in% colnames(pd))){
-		stop("diseaseabr must be provided in the phenotype data")
-	}
-	cancer <- tolower(unique(pd$diseaseabr))
-	clinicalData <- tcgaR:::getClinicalData(cancer)
-	pd.tcga.id <- substr(pd$TCGA.ID, 1,12)
-	pd.clinical <- clinicalData[match(pd.tcga.id, clinicalData$bcr_patient_barcode),]
-	new.var <- colnames(pd.clinical)
-	if (sum(new.var %in% colnames(pd))>0){
-		stop("Automatic addition of clinical data has already been done or cannot be done.")
-	}
-	if (ncol(pd.clinical) !=0){
-		pd <- cbind(pd, pd.clinical)
-	}
-	n <- ncol(pd.clinical)
-	cat(paste0(n, " clinical variables have been added \n"))
-	pData(object) <- pd
-	object
-}
+# 	pd <- pData(object)
+# 	if (!("diseaseabr" %in% colnames(pd))){
+# 		stop("diseaseabr must be provided in the phenotype data")
+# 	}
+# 	cancer <- tolower(unique(pd$diseaseabr))
+# 	clinicalData <- getClinicalData(cancer)
+# 	pd.tcga.id <- substr(pd$TCGA.ID, 1,12)
+# 	pd.clinical <- clinicalData[match(pd.tcga.id, clinicalData$bcr_patient_barcode),]
+# 	new.var <- colnames(pd.clinical)
+# 	if (sum(new.var %in% colnames(pd))>0){
+# 		stop("Automatic addition of clinical data has already been done or cannot be done.")
+# 	}
+# 	if (ncol(pd.clinical) !=0){
+# 		pd <- cbind(pd, pd.clinical)
+# 	}
+# 	n <- ncol(pd.clinical)
+# 	cat(paste0(n, " clinical variables have been added \n"))
+# 	pData(object) <- pd
+# 	object
+# }
 
 
 

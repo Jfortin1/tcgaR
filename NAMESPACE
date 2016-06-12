@@ -1,3 +1,7 @@
 export(getTCGA, getClinicalData, getCancers, cancer.exists, cancer.exists.meth, getMethMappings)
+import(minfi)
+import(downloader)
+import(RCurl)
+import(methylumi)
 importFrom("methods", "new")
 importFrom("utils", "read.csv", "read.table")

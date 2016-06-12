@@ -12,7 +12,7 @@
 # a <- .getTCGA.meth(cancer="coad", platform="450k", what="both", rgset=TRUE, n.samples=5, idat=TRUE)
 
 
-.getTCGA.meth <- function(cancer, platform = c("450k", "27k"), what = c("both", "normal", "cancer"), rgset = TRUE, verbose = FALSE, n.samples=NULL, idat=FALSE, idatDir="./"){
+.getTCGA.meth <- function(cancer, platform = c("450k", "27k"), what = c("both", "normal", "cancer"), verbose = FALSE, n.samples=NULL, idat=FALSE, idatDir="./", return=TRUE){
 	platform <- match.arg(platform)
 	what     <- match.arg(what)
 	cancer   <- tolower(cancer)
@@ -42,7 +42,7 @@
 	n <- length(filenames[[1]])
 	cat(paste0("[getTCGA.meth] ", n," samples have been found \n"))
 
-	if (rgset){
+	if (return){
 		if (platform=="450k"){
 			cat("[getTCGA.meth] Constructing the RGChannelSet \n")
 			object <- .read.450k.con(basenames = filenames$idat.name, con = filenames$idat.con, verbose = verbose)

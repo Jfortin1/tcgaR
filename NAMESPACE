@@ -1,4 +1,3 @@
 export(getTCGA, getClinicalData, getCancers, cancer.exists, cancer.exists.meth, getMethMappings)
-import(RCurl)
 importFrom("methods", "new")
 importFrom("utils", "read.csv", "read.table")

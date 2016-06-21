@@ -39,6 +39,7 @@ We note that the function is not case-sensitive. This creates an `RGChannelSet` 
 ```{r}
 grset <- preprocessFunnorm(rgset)
 ```
+For post-normalization statistical analyses, please read the `minfi` package vignette.
  
 ### Available cancers for 27k and 450k platforms:
 

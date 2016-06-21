@@ -16,7 +16,7 @@ The package contains functions to import Illumina Methylation arrays data from T
 
 ### Installation
 
-In R, type the following commands:
+In R, type the following commands to install `tcgaR`:
 ```{r}
 library(devtools)
 install_github("jfortin1/tcgaR")

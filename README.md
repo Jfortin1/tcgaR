@@ -12,16 +12,11 @@
 | Platform:      | Linux       |
 | R CMD check    | <a href="https://travis-ci.org/Jfortin1/tcgaR"><img src="https://travis-ci.org/Jfortin1/tcgaR.svg?branch=master" alt="Build status"></a> |
 
-The package contains functions to import Illumina Methylation arrays data from The Cancer Genome Atlas (TCGA) into the R softare. For Illumina 450k data, `minfi` objects are created (`RGChannelSet`), while `methylumi` objects are created for 27k data. The use of `methylumi` for 27k data is temporary; we are in the process of adapting `minfi` to support 27k array data. 
-
-### Installation
-
-In R, type the following commands to install `tcgaR`:
+The package contains functions to import Illumina Methylation arrays data from The Cancer Genome Atlas (TCGA) into the R softare. For Illumina 450k data, `minfi` objects are created (`RGChannelSet`), while `methylumi` objects are created for 27k data. The use of `methylumi` for 27k data is temporary; we are in the process of adapting `minfi` to support 27k array data. To install the package, type the following commands in R:
 ```{r}
 library(devtools)
 install_github("jfortin1/tcgaR")
 ```
-
 Note that the following Bioconductor packages will need to be installed prior to installing `tcgaR`: `minfi`, `methylumi` and `illuminaio`.
 
 ### 450k array data

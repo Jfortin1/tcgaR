@@ -34,7 +34,7 @@ This returns a `data.frame` with the sample names, the histology of the samples,
 ```{r}
 pData(rgset) <- metadata
 ```
-For further processing of the data, we recommend to use the function `preprocessFunnorm` which uses functional normalization to process data. Functional normalization is an extension of quantile normalization for data that show global epigenetic change between two conditions, as in the case of a normal/cancer comparison. To apply functional normalization, we use the following command: 
+For further processing of the data, we recommend to use the function `preprocessFunnorm` which uses functional normalization to process data. Functional normalization [[Fortin et al., 2014](http://www.genomebiology.com/2014/15/12/503)] is an extension of quantile normalization for data that show global epigenetic change between two conditions, as in the case of a normal/cancer comparison. To apply functional normalization, we use the following command: 
 
 ```{r}
 grset <- preprocessFunnorm(rgset)

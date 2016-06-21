@@ -1,6 +1,15 @@
-tcgaR
-===============
+# tcgaR
+### TCGA R Portal for methylation array data.
 
-[![Build Status](https://travis-ci.org/Jfortin1/tcgaR.svg?branch=master)](https://travis-ci.org/Jfortin1/tcgaR)
+---------
 
-TCGA R Portal for methylation array data. The package contains functions to import directly Illumina Methylation arrays data into minfi objects from the TCGA data portal. 
+**Creator**: Jean-Philippe Fortin, jeanphi@mail.med.upenn.edu
+
+##### Software status
+
+| Resource:      | Travis CI     |
+| -------------  |  ------------- |
+| Platform:      | OSX       |
+| R CMD check    | <a href="https://travis-ci.org/Jfortin1/tcgaR"><img src="https://travis-ci.org/Jfortin1/tcgaR.svg?branch=master" alt="Build status"></a> |
+
+The package contains functions to import directly Illumina Methylation arrays data into minfi objects from the TCGA data portal. 

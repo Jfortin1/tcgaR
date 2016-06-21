@@ -40,6 +40,8 @@ For further processing of the data, we recommend to use the function `preprocess
 grset <- preprocessFunnorm(rgset)
 ```
 
+For post-normalization statistical analyses, please read the `minfi` package vignette.
+
 ### 27k array data
 
 Similarly, we can import 27k data into R using the `methylumi` package. For instance, for colon adenocarcinoma (COAD) data, we use
@@ -54,8 +56,12 @@ metadata <- getMethMappings(cancer="coad", platform="27k")
 
 ### Clinical data
 
+To import clinical data for all samples for a given cancer type, for instance Colon adenocarcinoma (COAD) samples, one can use the following command:
 
-For post-normalization statistical analyses, please read the `minfi` package vignette.
+```{r}
+clinical <- getClinicalData(cancer="coad")
+```
+
  
 ### Available cancers for 27k and 450k platforms:
 

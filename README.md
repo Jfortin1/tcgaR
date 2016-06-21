@@ -20,6 +20,13 @@ The package contains functions to import Illumina Methylation arrays data into `
 library(tcgaR)
 ```
 
+
+To import methylation data for Colon adenocarcinoma from the 450k platform, for both normal and tumor samples, we use the following command:
+```{r}
+rgset <- getTCGA(cancer="blca", platform="450k")
+```
+This creates an RGChannelSet (see `minfi' package), a starting object in R for preprocessing. 
+
 ### Available cancers for 27k and 450k platforms:
 
 | Abbreviation      | Full name   | 27k | 450k

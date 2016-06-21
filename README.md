@@ -24,40 +24,40 @@ library(tcgaR)
 
 | Abbreviation      | Full name   | 27k | 450k
 | -------------  |  ------------- | ---- | ------ |
-  ACC | Adrenocortical carcinoma || :ballot_box_with_check: 
-  BLCA | Bladder Urothelial Carcinoma || :ballot_box_with_check:
-  BRCA | Breast invasive carcinoma | :ballot_box_with_check:| :ballot_box_with_check:
-  CESC | Cervical squamous cell carcinoma || :ballot_box_with_check:
-  CHOL | Cholangiocarcinoma || :ballot_box_with_check:
-COAD | Colon adenocarcinoma | :ballot_box_with_check:| :ballot_box_with_check:
-DLBC | Large B-cell Lymphoma || :ballot_box_with_check:
-ESCA | Esophageal carcinoma || :ballot_box_with_check: 
-GBM | Glioblastoma multiforme | :ballot_box_with_check:| :ballot_box_with_check:
-HNSC | Head and Neck squamous cell carcinoma  || :ballot_box_with_check:
-KICH | Kidney Chromophobe|| :ballot_box_with_check:
-KIRP| Kidney renal papillary cell carcinoma| :ballot_box_with_check:| :ballot_box_with_check:
-KIRC |Kidney renal clear cell carcinoma| :ballot_box_with_check:| :ballot_box_with_check:
-LAML | Acute Myeloid Leukemia | :ballot_box_with_check:| :ballot_box_with_check:
+  ACC | Adrenocortical carcinoma || :large_blue_circle: 
+  BLCA | Bladder Urothelial Carcinoma || :large_blue_circle:
+  BRCA | Breast invasive carcinoma | :large_blue_circle:| :large_blue_circle:
+  CESC | Cervical squamous cell carcinoma || :large_blue_circle:
+  CHOL | Cholangiocarcinoma || :large_blue_circle:
+COAD | Colon adenocarcinoma | :large_blue_circle:| :large_blue_circle:
+DLBC | Large B-cell Lymphoma || :large_blue_circle:
+ESCA | Esophageal carcinoma || :large_blue_circle: 
+GBM | Glioblastoma multiforme | :large_blue_circle:| :large_blue_circle:
+HNSC | Head and Neck squamous cell carcinoma  || :large_blue_circle:
+KICH | Kidney Chromophobe|| :large_blue_circle:
+KIRP| Kidney renal papillary cell carcinoma| :large_blue_circle:| :large_blue_circle:
+KIRC |Kidney renal clear cell carcinoma| :large_blue_circle:| :large_blue_circle:
+LAML | Acute Myeloid Leukemia | :large_blue_circle:| :large_blue_circle:
 LCML | Chronic Myelogenous Leukemia | | 
-LGG | Lower grade glioma || :ballot_box_with_check: 
-LIHC | Liver hepatocellular carcinoma || :ballot_box_with_check:
-LUAD | Lung adenocarcinoma| :ballot_box_with_check:| :ballot_box_with_check:
-LUSC | Lung squamous cell carcinoma| :ballot_box_with_check:| :ballot_box_with_check:
-MESO | Mesothelioma || :ballot_box_with_check:
-OV | Ovarian serous cystadenocarcinoma| :ballot_box_with_check:| :ballot_box_with_check:
-PAAD | Pancreatic adenocarcinoma || :ballot_box_with_check:
-PCPG | Pheochromocytoma and Paraganglioma || :ballot_box_with_check:
-PRAD | Prostate adenocarcinoma|| :ballot_box_with_check: 
-READ | Rectum adenocarcinoma| :ballot_box_with_check:| :ballot_box_with_check:
-SARC | Sarcoma || :ballot_box_with_check:
-SKCM | Skin Cutaneous Melanoma || :ballot_box_with_check:
-STAD | Stomach adenocarcinoma| :ballot_box_with_check:| :ballot_box_with_check:
-TGCT | Testicular Germ Cell Tumors || :ballot_box_with_check:
-THCA | Thyroid carcinoma|| :ballot_box_with_check: 
-THYM | Thymoma|| :ballot_box_with_check:  
-UCEC | Uterine Corpus Endometrial Carcinoma | :ballot_box_with_check:| :ballot_box_with_check:
-UCS | Uterine Carcinosarcoma || :ballot_box_with_check:
-UVM | Uveal Melanoma || :ballot_box_with_check:
+LGG | Lower grade glioma || :large_blue_circle: 
+LIHC | Liver hepatocellular carcinoma || :large_blue_circle:
+LUAD | Lung adenocarcinoma| :large_blue_circle:| :large_blue_circle:
+LUSC | Lung squamous cell carcinoma| :large_blue_circle:| :large_blue_circle:
+MESO | Mesothelioma || :large_blue_circle:
+OV | Ovarian serous cystadenocarcinoma| :large_blue_circle:| :large_blue_circle:
+PAAD | Pancreatic adenocarcinoma || :large_blue_circle:
+PCPG | Pheochromocytoma and Paraganglioma || :large_blue_circle:
+PRAD | Prostate adenocarcinoma|| :large_blue_circle: 
+READ | Rectum adenocarcinoma| :large_blue_circle:| :large_blue_circle:
+SARC | Sarcoma || :large_blue_circle:
+SKCM | Skin Cutaneous Melanoma || :large_blue_circle:
+STAD | Stomach adenocarcinoma| :large_blue_circle:| :large_blue_circle:
+TGCT | Testicular Germ Cell Tumors || :large_blue_circle:
+THCA | Thyroid carcinoma|| :large_blue_circle: 
+THYM | Thymoma|| :large_blue_circle:  
+UCEC | Uterine Corpus Endometrial Carcinoma | :large_blue_circle:| :large_blue_circle:
+UCS | Uterine Carcinosarcoma || :large_blue_circle:
+UVM | Uveal Melanoma || :large_blue_circle:
 
 
 

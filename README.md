@@ -24,11 +24,9 @@ install_github("jfortin1/tcgaR")
 
 Note that the following Bioconductor packages will need to be installed prior to installing `tcgaR`: `minfi`, `methylumi` and `illuminaio`.
 
-### Examples
+### 450k array data
 
-#### 450k array data
-
-We first load the package:
+The different TCGA cancers for which 450k data are available are listed in the section "Available cancers for 27k and 450k platforms" below. In a new `R` session, we first load the package:
 ```{r}
 library(tcgaR)
 ```

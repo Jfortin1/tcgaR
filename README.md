@@ -12,4 +12,4 @@
 | Platform:      | Linux       |
 | R CMD check    | <a href="https://travis-ci.org/Jfortin1/tcgaR"><img src="https://travis-ci.org/Jfortin1/tcgaR.svg?branch=master" alt="Build status"></a> |
 
-The package contains functions to import directly Illumina Methylation arrays data into minfi objects from the TCGA data portal. 
+The package contains functions to import Illumina Methylation arrays data into `minfi` objects in the R software from the The Cancer Genome Atlas (TCGA) data portal. 

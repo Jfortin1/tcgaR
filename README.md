@@ -26,12 +26,9 @@ Note that the following Bioconductor packages will need to be installed prior to
 
 ### 450k array data
 
-The different TCGA cancers for which 450k data are available are listed in the section "Available cancers for 27k and 450k platforms" below. In a new `R` session, we first load the package:
+The different TCGA cancers for which 450k data are available are listed in the section "Available cancers for 27k and 450k platforms" below. To import all 450k methylation data for Colon adenocarcinoma (abbreviation BLCA) from the 450k platform, for both normal and tumor samples, we first load the package and use the `getTCGA` function: 
 ```{r}
 library(tcgaR)
-```
-To import all 450k methylation data for Colon adenocarcinoma (abbreviation BLCA) from the 450k platform, for both normal and tumor samples, we use the following command:
-```{r}
 rgset <- getTCGA(cancer="blca", platform="450k")
 ```
 We note that the function is not case-sensitive. This creates an `RGChannelSet` (see `minfi` package), the starting object in `minfi` that contains the raw array data. For further processing of the data, we recommend to use the function `preprocessFunnorm` which uses functional normalization to process data. Functional normalization is an extension of quantile normalization for data that show global epigenetic change between two conditions, as in the case of a normal/cancer comparison. To apply functional normalization, we use the following command: 

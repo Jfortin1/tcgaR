@@ -1,19 +1,5 @@
-1. methylumi set for 27k data
-2. histone modification?
-3. mappings function. independent
-4. function for n.samples
-5. add function that list the cancers available.
-6. for RNA data, add a function that changes the names of the samples
-according to the mappings
-7. Add a function that looks at the overlap of methylation data and gene expression data.
-8. For the overlap, need to take substr(barcode, 9, 12) to get the participant id,
-then need to look if its coming from the same tissue. 
-
-
-
-
 Vignette: 
-- add table that describes the number of samples for each cancer type
+
 - add a pipeline for processing the rgset in minfi:
   1. preprocessNoob()
   2. preprocessFunnorm()

@@ -1,6 +1,6 @@
 Package: tcgaR
 Title: Interface in R for the TCGA Portal
-Version: 0.99.3
+Version: 0.99.5
 Authors@R: c(person("Jean-Philippe", "Fortin", role = c("cre", "aut"),
                     email = "jfortin@jhsph.edu"))
 Depends: methods

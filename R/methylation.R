@@ -1,10 +1,10 @@
-# cancer <- "coad"
-# platform <- "27k"
-# what = "both"
-# verbose=TRUE
-# idat=FALSE
-# idatDir = NULL
-# n.samples = 5
+cancer <- "coad"
+platform <- "450k"
+what = "both"
+verbose=TRUE
+idat=FALSE
+idatDir = NULL
+n.samples = 5
 
 
 

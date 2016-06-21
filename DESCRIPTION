@@ -8,6 +8,6 @@ Imports: illuminaio, minfi (>= 1.18.2), methylumi (>= 2.18.2), downloader, RCurl
 Suggests: BiocStyle, RUnit, digest, knitr
 Description: R interface for the The Cancer Genome Atlas (TCGA) portal to download methylation data from Illumina 27k and 450k arrays. 
 Url: https://github.com/Jfortin1/tcgaR
-VignetteBuilder: knitr
+VignetteBuilder: knit
 License: Artistic-2.0
 biocViews: DNAMethylation

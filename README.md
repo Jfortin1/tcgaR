@@ -26,20 +26,18 @@ Note that the following Bioconductor packages will need to be installed prior to
 
 ### Examples
 
-##### 450k data
+#### 450k array data
 
-Let's first load the package:
-
+We first load the package:
 ```{r}
 library(tcgaR)
 ```
-
-To import methylation data for Colon adenocarcinoma from the 450k platform, for both normal and tumor samples, we use the following command:
+For instance, to import all 450k methylation data for Colon adenocarcinoma from the 450k platform, for both normal and tumor samples, we use the following command:
 ```{r}
 rgset <- getTCGA(cancer="blca", platform="450k")
 ```
-This creates an RGChannelSet (see `minfi' package), a starting object in R for preprocessing. 
-
+This creates an `RGChannelSet` (see `minfi` package), the starting object in `minfi` that contains the raw array data.
+ 
 ### Available cancers for 27k and 450k platforms:
 
 | Abbreviation      | Full name   | 27k | 450k

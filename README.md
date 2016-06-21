@@ -31,11 +31,25 @@ The different TCGA cancers for which 450k data are available are listed in the s
 library(tcgaR)
 rgset <- getTCGA(cancer="blca", platform="450k")
 ```
-We note that the function is not case-sensitive. This creates an `RGChannelSet` (see `minfi` package), the starting object in `minfi` that contains the raw array data. For further processing of the data, we recommend to use the function `preprocessFunnorm` which uses functional normalization to process data. Functional normalization is an extension of quantile normalization for data that show global epigenetic change between two conditions, as in the case of a normal/cancer comparison. To apply functional normalization, we use the following command: 
+We note that the function is not case-sensitive. This creates an `RGChannelSet` (see `minfi` package), the starting object in `minfi` that contains the raw array data. The option `idat=TRUE` will download the raw .idat files associated with each sample (one for the green channel and one for the red channel), and the option `idatDir` specifies the directory in which the .idat files will be saved. To obtain the metadata associated with the methylation data, we have created the function `getMethMappings`. For instance, to download the metadata for the BLCA dataset, we use
+```{r}
+metadata <- getMethMappings(cancer="blca", platform="450k")
+```
+This returns a `data.frame` with the sample names, the histology of the samples, and the TCGA barcode. One can add the metadata to the `RGChannelSet` using 
+```{r}
+pData(rgset) <- metadata
+```
+For further processing of the data, we recommend to use the function `preprocessFunnorm` which uses functional normalization to process data. Functional normalization is an extension of quantile normalization for data that show global epigenetic change between two conditions, as in the case of a normal/cancer comparison. To apply functional normalization, we use the following command: 
 
 ```{r}
 grset <- preprocessFunnorm(rgset)
 ```
+
+
+
+### 27k array data
+
+
 For post-normalization statistical analyses, please read the `minfi` package vignette.
  
 ### Available cancers for 27k and 450k platforms:

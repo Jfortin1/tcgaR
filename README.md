@@ -24,7 +24,7 @@ library(tcgaR)
 
 | Abbreviation      | Full name   | 27k | 450k
 | -------------  |  ------------- | ---- | ------ |
-|ACC | Adrenocortical carcinoma | \checkmark | |
+|ACC | Adrenocortical carcinoma | :heavy_check_mark: | |
 
 
 

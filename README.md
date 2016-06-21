@@ -19,3 +19,12 @@ The package contains functions to import Illumina Methylation arrays data into `
 ```{r}
 library(tcgaR)
 ```
+
+### Available cancers
+
+| Abbreviation      | Full name   | 27k | 450k
+| -------------  |  ------------- | ---- | ------ |
+|ACC | Adrenocortical carcinoma | \checkmark | |
+
+
+
